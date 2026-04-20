@@ -2,19 +2,9 @@
 
 ## Future Enhancements
 
-### Provide/Inject Plugin (Approach 2)
+### ~~Provide/Inject Plugin (Approach 2)~~ — DONE
 
-A `createElectric()` plugin that provides a shared cache via Vue's provide/inject system.
-This would give explicit lifecycle control and allow app-level configuration (base URL, default headers).
-
-```typescript
-// Future API sketch
-const electric = createElectric({ baseUrl: "http://localhost:3000" });
-app.use(electric);
-
-// In components
-const { data } = useShape({ params: { table: "items" } }); // inherits baseUrl from plugin
-```
+Implemented in `src/plugin.ts`. See `createElectric()`, `useElectricConfig()`, `ELECTRIC_KEY`.
 
 ### Pinia Store Integration (Approach 3)
 

@@ -1,10 +1,15 @@
 import type { Ref, ShallowRef } from "vue";
-import type { Row, Shape, ShapeStream } from "@electric-sql/client";
+import type { Row, Shape, ShapeStream, ShapeStreamOptions } from "@electric-sql/client";
 
 export interface UseShapeOptions {
   /** Use shallowRef for data array. Default: true */
   shallow?: boolean;
 }
+
+/** Options for useShape — url is optional when createElectric plugin provides baseUrl */
+export type UseShapeInput<T extends Row = Row> =
+  | ShapeStreamOptions<T>
+  | (Omit<ShapeStreamOptions<T>, "url"> & { url?: string });
 
 export interface UseShapeReturn<T extends Row = Row> {
   /** Current rows from the shape */

@@ -2,13 +2,15 @@ import { ref, shallowRef, watchEffect, toValue } from "vue";
 import type { MaybeRefOrGetter } from "vue";
 import type { Row, ShapeStreamOptions } from "@electric-sql/client";
 import { getShapeStream, getShape } from "./cache";
-import type { UseShapeOptions, UseShapeReturn } from "./types";
+import type { UseShapeInput, UseShapeOptions, UseShapeReturn } from "./types";
+import { useElectricConfig } from "./plugin";
 
 export function useShape<T extends Row = Row>(
-  options: MaybeRefOrGetter<ShapeStreamOptions<T>>,
+  options: MaybeRefOrGetter<UseShapeInput<T>>,
   composableOptions: UseShapeOptions = {},
 ): UseShapeReturn<T> {
   const { shallow = true } = composableOptions;
+  const config = useElectricConfig();
 
   const data = shallow ? shallowRef<T[]>([]) : (ref<T[]>([]) as any);
   const shape = shallowRef<any>(undefined);
@@ -22,7 +24,13 @@ export function useShape<T extends Row = Row>(
     const resolved = toValue(options);
     const controller = new AbortController();
 
-    const shapeStream = getShapeStream<T>(resolved);
+    const mergedOptions = {
+      ...resolved,
+      url: resolved.url || `${config?.baseUrl}/v1/shape`,
+      headers: { ...config?.headers, ...resolved.headers },
+    } as ShapeStreamOptions<T>;
+
+    const shapeStream = getShapeStream<T>(mergedOptions);
     const shapeInstance = getShape<T>(shapeStream);
 
     stream.value = shapeStream;
