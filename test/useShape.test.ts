@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, ref as vueRef } from 'vue'
 import { mount } from '@vue/test-utils'
 import { defineComponent, h } from 'vue'
 import { useShape } from '../src/useShape'
@@ -149,5 +149,38 @@ describe('useShape', () => {
 
     expect(wrapper.vm.isError).toBe(true)
     expect(wrapper.vm.error).toBeInstanceOf(Error)
+  })
+})
+
+describe('useShape reactive options', () => {
+  beforeEach(() => {
+    fakeStream = createFakeShapeStream()
+    fakeShape = createFakeShape(fakeStream)
+  })
+
+  it('reconnects when reactive options change', async () => {
+    const { getShapeStream } = await import('../src/cache')
+
+    const table = vueRef('items')
+
+    const wrapper = mount(defineComponent({
+      setup() {
+        const { data } = useShape(() => ({
+          url: 'http://localhost:3000/v1/shape',
+          params: { table: table.value },
+        }))
+        return { data }
+      },
+      render() { return h('div') },
+    }))
+
+    const callCountBefore = vi.mocked(getShapeStream).mock.calls.length
+
+    // Change the reactive option
+    table.value = 'users'
+    await nextTick()
+
+    const callCountAfter = vi.mocked(getShapeStream).mock.calls.length
+    expect(callCountAfter).toBeGreaterThan(callCountBefore)
   })
 })
