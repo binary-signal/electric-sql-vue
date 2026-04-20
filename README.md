@@ -47,6 +47,41 @@ const { data } = useShape(() => ({
 }));
 ```
 
+### Plugin (app-level config)
+
+Use `createElectric` to provide a base URL and default headers to all `useShape` calls:
+
+```typescript
+// main.ts
+import { createApp } from "vue";
+import { createElectric } from "@binary-signal/electric-sql-vue";
+import App from "./App.vue";
+
+const app = createApp(App);
+
+app.use(
+  createElectric({
+    baseUrl: "http://localhost:3000",
+    headers: { Authorization: "Bearer token123" },
+  }),
+);
+
+app.mount("#app");
+```
+
+Components can then omit the `url` — it's inherited from the plugin:
+
+```vue
+<script setup lang="ts">
+import { useShape } from "@binary-signal/electric-sql-vue";
+
+// No url needed — inferred as baseUrl + '/v1/shape'
+const { data } = useShape({ params: { table: "items" } });
+</script>
+```
+
+Per-call options override plugin defaults (headers are merged, per-call wins).
+
 ### Shallow reactivity
 
 By default, `data` uses `shallowRef` for performance (Electric replaces the full array on sync). Opt into deep
