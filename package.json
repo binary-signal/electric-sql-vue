@@ -1,7 +1,7 @@
 {
-  "name": "@electric-sql/vue",
+  "name": "@binary-signal/electric-sql-vue",
   "version": "0.0.1",
-  "description": "Vue 3 composables for Electric SQL",
+  "description": "Vue 3 composables for Electric SQL — reactive shape subscriptions with automatic sync",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -15,6 +15,25 @@
   },
   "files": [
     "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/binary-signal/electric-sql-vue.git"
+  },
+  "homepage": "https://github.com/binary-signal/electric-sql-vue",
+  "bugs": {
+    "url": "https://github.com/binary-signal/electric-sql-vue/issues"
+  },
+  "keywords": [
+    "vue",
+    "electric-sql",
+    "composable",
+    "reactive",
+    "sync",
+    "real-time"
   ],
   "peerDependencies": {
     "@electric-sql/client": "^1.0.0",

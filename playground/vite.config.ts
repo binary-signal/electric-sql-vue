@@ -1,12 +1,12 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   root: __dirname,
   plugins: [vue()],
   resolve: {
     alias: {
-      '@electric-sql/vue': '../src/index.ts',
+      "@binary-signal/electric-sql-vue": "../src/index.ts",
     },
   },
-})
+});
