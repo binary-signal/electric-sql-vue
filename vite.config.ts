@@ -5,6 +5,9 @@ export default defineConfig({
   plugins: [
     dts({ rollupTypes: true }),
   ],
+  test: {
+    environment: 'jsdom',
+  },
   build: {
     lib: {
       entry: 'src/index.ts',
