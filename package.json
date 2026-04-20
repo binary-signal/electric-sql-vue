@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@electric-sql/client": "^1.0.0",
+    "@vitejs/plugin-vue": "^6.0.0",
     "@vue/test-utils": "^2.4.0",
     "jsdom": "^29.0.2",
     "oxlint": "^0.16.0",
