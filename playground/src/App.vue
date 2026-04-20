@@ -36,11 +36,12 @@ const { data, isLoading, isError, error, lastSyncedAt } = useShape(() => ({
     <div v-else-if="isError" style="color: red">Error: {{ error }}</div>
     <div v-else>
       <p style="color: #666; font-size: 0.875rem">
-        {{ data.length }} rows | Last synced: {{
-          lastSyncedAt ? new Date(lastSyncedAt).toLocaleTimeString() : "never"
-        }}
+        {{ data.length }} rows | Last synced:
+        {{ lastSyncedAt ? new Date(lastSyncedAt).toLocaleTimeString() : "never" }}
       </p>
-      <pre style="background: #f5f5f5; padding: 1rem; overflow: auto; max-height: 400px">{{ JSON.stringify(data, null, 2) }}</pre>
+      <pre style="background: #f5f5f5; padding: 1rem; overflow: auto; max-height: 400px">{{
+        JSON.stringify(data, null, 2)
+      }}</pre>
     </div>
   </div>
 </template>

@@ -12,15 +12,14 @@ pnpm add @binary-signal/electric-sql-vue @electric-sql/client
 ## Usage
 
 ```vue
-
 <script setup lang="ts">
-  import {ref} from 'vue'
-  import {useShape} from '@binary-signal/electric-sql-vue'
+import { ref } from "vue";
+import { useShape } from "@binary-signal/electric-sql-vue";
 
-  const {data, isLoading, error} = useShape({
-    url: 'http://localhost:3000/v1/shape',
-    params: {table: 'items'},
-  })
+const { data, isLoading, error } = useShape({
+  url: "http://localhost:3000/v1/shape",
+  params: { table: "items" },
+});
 </script>
 
 <template>
@@ -37,15 +36,15 @@ pnpm add @binary-signal/electric-sql-vue @electric-sql/client
 Pass a getter to automatically reconnect when parameters change:
 
 ```typescript
-const filter = ref('')
+const filter = ref("");
 
-const {data} = useShape(() => ({
-    url: 'http://localhost:3000/v1/shape',
-    params: {
-        table: 'items',
-        where: `name LIKE '%${filter.value}%'`,
-    },
-}))
+const { data } = useShape(() => ({
+  url: "http://localhost:3000/v1/shape",
+  params: {
+    table: "items",
+    where: `name LIKE '%${filter.value}%'`,
+  },
+}));
 ```
 
 ### Shallow reactivity
@@ -54,7 +53,7 @@ By default, `data` uses `shallowRef` for performance (Electric replaces the full
 reactivity if needed:
 
 ```typescript
-const {data} = useShape(options, {shallow: false})
+const { data } = useShape(options, { shallow: false });
 ```
 
 ## API
@@ -62,7 +61,7 @@ const {data} = useShape(options, {shallow: false})
 ### `useShape<T>(options, composableOptions?)`
 
 | Return         | Type                         | Description                     |
-|----------------|------------------------------|---------------------------------|
+| -------------- | ---------------------------- | ------------------------------- |
 | `data`         | `ShallowRef<T[]>`            | Current rows                    |
 | `isLoading`    | `Ref<boolean>`               | True during initial fetch       |
 | `error`        | `ShallowRef<Error \| false>` | Error or false                  |
@@ -78,7 +77,7 @@ const {data} = useShape(options, {shallow: false})
 ### Utilities
 
 ```typescript
-import {getShapeStream, getShape, preloadShape} from '@binary-signal/electric-sql-vue'
+import { getShapeStream, getShape, preloadShape } from "@binary-signal/electric-sql-vue";
 ```
 
 - `getShapeStream(options)` — get or create a cached ShapeStream

@@ -9,11 +9,11 @@ This would give explicit lifecycle control and allow app-level configuration (ba
 
 ```typescript
 // Future API sketch
-const electric = createElectric({ baseUrl: 'http://localhost:3000' })
-app.use(electric)
+const electric = createElectric({ baseUrl: "http://localhost:3000" });
+app.use(electric);
 
 // In components
-const { data } = useShape({ params: { table: 'items' } }) // inherits baseUrl from plugin
+const { data } = useShape({ params: { table: "items" } }); // inherits baseUrl from plugin
 ```
 
 ### Pinia Store Integration (Approach 3)
@@ -22,10 +22,10 @@ Shape state managed via Pinia stores for DevTools integration and time-travel de
 
 ```typescript
 // Future API sketch
-const useItemsStore = defineShapeStore('items', {
-  url: 'http://localhost:3000/v1/shape',
-  params: { table: 'items' }
-})
+const useItemsStore = defineShapeStore("items", {
+  url: "http://localhost:3000/v1/shape",
+  params: { table: "items" },
+});
 ```
 
 ### Other Future Work
