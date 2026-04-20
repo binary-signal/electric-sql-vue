@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { nextTick, ref as vueRef } from 'vue'
+import { nextTick, ref as vueRef, isRef, isShallow } from 'vue'
 import { mount } from '@vue/test-utils'
 import { defineComponent, h } from 'vue'
 import { useShape } from '../src/useShape'
@@ -182,5 +182,44 @@ describe('useShape reactive options', () => {
 
     const callCountAfter = vi.mocked(getShapeStream).mock.calls.length
     expect(callCountAfter).toBeGreaterThan(callCountBefore)
+  })
+})
+
+describe('useShape shallow option', () => {
+  beforeEach(() => {
+    fakeStream = createFakeShapeStream()
+    fakeShape = createFakeShape(fakeStream)
+  })
+
+  it('uses shallowRef for data by default', () => {
+    let dataRef: any
+    mount(defineComponent({
+      setup() {
+        const { data } = useShape({ url: 'http://localhost:3000/v1/shape', params: { table: 'items' } })
+        dataRef = data
+        return { data }
+      },
+      render() { return h('div') },
+    }))
+
+    expect(isShallow(dataRef)).toBe(true)
+  })
+
+  it('uses deep ref when shallow: false', () => {
+    let dataRef: any
+    mount(defineComponent({
+      setup() {
+        const { data } = useShape(
+          { url: 'http://localhost:3000/v1/shape', params: { table: 'items' } },
+          { shallow: false },
+        )
+        dataRef = data
+        return { data }
+      },
+      render() { return h('div') },
+    }))
+
+    expect(isRef(dataRef)).toBe(true)
+    expect(isShallow(dataRef)).toBe(false)
   })
 })
